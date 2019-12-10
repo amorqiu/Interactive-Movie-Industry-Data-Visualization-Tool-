@@ -227,7 +227,9 @@ def plot_graphs(genre):
         x.append(row[0])
         y.append(row[1])
     fig = go.Figure([go.Bar(x=x, y=y)])
-    fig.show()
+    #fig.show()
+    fig.write_html('mapbox_1.html',auto_open=True)
+
 
 
 # to show the most lucrative movie domestically or internationally or worldwide
@@ -315,24 +317,67 @@ def plot_bar(name):
 
 ##interactive command
 def interactive_prompt():
-    help_text = load_help_text()
+    parameter=["relation","success","distributor","movie"]
+    help_text =  '''
+                relation <genre>
+                    available only if there is an existing movie genre
+                    show the domestic_income and international_income of all movies in a spefic genre
+                    graph: scatterplot
+                    valid inputs: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
+                success <area> <limit>
+                    available any time
+                    list top movies with highest either domestic or international or gross revenue
+                    graph: table
+                    valid inputs: area accepts "US", "International" if novalue and other values are inputted, it will be default value as "gross"; limit requires an integer
+                distributor <genre>
+                    available only if there is an active site or nearby result set
+                    show you who are the distributors good at producing average most lucrative movies in a specific genre
+                    graph: barchart
+                    valid input: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
+                movie <name>
+                    available to all moveis released in 2018
+                    show you the component of a movie's income
+                    graph: piechart
+                    valid input: movie name
+                exit
+                    exits the program
+                help
+                    lists available commands (these instructions)'''
     response = ''
     while response != 'exit':
+        name=''
         response = input('Enter a command: ')
-    if response == 'help':
-        print(help_text)
-        continue
-    elif response == 'exit':
-        print("bye")
-        break
-    elif response == '':
-        print("Command not recognized:" + response)
-        continue
-    elif response.split(" ")[0] not in first_list:
-        print("Command not recognized:" + response)
-        continue
-    elif (response.split(" ")[1]).split("=")[0] not in parameter:
-        print("Command not recognized:" + response)
-        continue
-    else:
-        results = process_command(response)
+        if response == 'help':
+            print(help_text)
+            continue
+        elif response == 'exit':
+            print("bye")
+            break
+        elif response == '':
+            print("Command not recognized:" + response)
+            continue
+        elif (response.split(" ")[0]) not in parameter:
+            print("Command not recognized:" + response)
+            continue
+        elif response.startswith("relation"):
+            genre=response.split(" ")[1]
+            print(plot_scattorplot(genre))
+            continue
+        elif response.startswith("success"):
+            limit=response.split(" ")[2]
+            parameter=response.split(" ")[1]
+            print(plot_table(parameter,limit))
+            continue
+        elif response.startswith("distributor"):
+            genre=response.split(" ")[1]
+            print(plot_graphs(genre))
+        else:
+            object = response.split(" ")
+            for i in object[1:]:
+                name=name+i+" "
+            print(plot_bar(name))
+
+
+
+if __name__=="__main__":
+    interactive_prompt()
