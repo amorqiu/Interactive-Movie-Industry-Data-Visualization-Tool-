@@ -16,22 +16,23 @@ The most importance function here is insert_stuff(). Since each movie has more t
 ● Brief user guide, including how to run the program and how to choose presentation options.
 
 I have four presentation ways. And detail guide lines is listed below.
-    relation <genre>
-                    available only if there is an existing movie genre
-                    show the domestic_income and international_income of all movies in a spefic genre
-                    graph: scatterplot
-                    valid inputs: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
-                success <area> <limit>
-                    available any time
-                    list top movies with highest either domestic or international or gross revenue
-                    graph: table
-                    valid inputs: area accepts "US", "International" if novalue and other values are inputted, it will be default value                     as "gross"; limit requires an integer
-                distributor <genre>
-                    available only if there is an active site or nearby result set
-                    show you who are the distributors good at producing average most lucrative movies in a specific genre
-                    graph: barchart
-                    valid input: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
-                movie <name>
-                    available to all moveis released in 2018
-                    show you the component of a movie's income
-                    graph: piechart
+relation <genre>
+    available only if there is an existing movie genre
+    show the domestic_income and international_income of all movies in a spefic genre
+    graph: scatterplot
+    valid inputs: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
+success <area> <limit>
+    available any time
+    list top movies with highest either domestic or international or gross revenue
+    graph: table
+    valid inputs: area accepts "US", "International" if novalue and other values are inputted, it will be default value                     as "gross"; limit requires an integer
+distributor <genre>
+    available only if there is an active site or nearby result set
+    show you who are the distributors good at producing average most lucrative movies in a specific genre
+    graph: barchart
+    valid input: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
+movie <name>
+    available to all moveis released in 2018
+    show you the component of a movie's income
+    graph: piechart
+    valid input: movie names, whitespace between words
