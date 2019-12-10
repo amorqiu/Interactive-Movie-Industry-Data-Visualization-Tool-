@@ -372,10 +372,8 @@ def interactive_prompt():
             genre=response.split(" ")[1]
             print(plot_graphs(genre))
         else:
-            object = response.split(" ")
-            for i in object[1:]:
-                name=name+i+" "
-            print(plot_bar(name))
+            object = response.split(" ")[1]
+            print(plot_bar(object))
 
 
 
