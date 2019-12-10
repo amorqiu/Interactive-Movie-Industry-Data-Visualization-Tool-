@@ -370,10 +370,12 @@ def interactive_prompt():
             continue
         elif response.startswith("distributor"):
             genre=response.split(" ")[1]
-            print(plot_graphs(genre))
+            print(plot_graphs(genre)) 
+	    continue
         else:
             object = response.split(" ")[1]
             print(plot_bar(object))
+	    continue
 
 
 
