@@ -203,9 +203,7 @@ def update_stuff():
 
     conn.commit()
     conn.close()
-init_db()
-insert_stuff()
-update_stuff()
+
 
 #Part 3: Data Visualization
 # get top 10 most successful distributor in one genre
@@ -288,9 +286,8 @@ def plot_scattorplot(parameter):
         theater.append(row[0])
         income.append(row[1])
     fig = go.Figure(data=go.Scatter(x=theater, y=income, mode='markers'))
-    #fig.show()
-    fig.write_html('mapbox_1.html',auto_open=True)
-#print(plot_scattorplot("Action"))
+    fig.show()
+
 
 
 ###plot the distrbution of boxoffice of a movie in 2019
@@ -310,74 +307,67 @@ def plot_bar(name):
     values = [result[0][0], result[0][1]]
 
     fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
-    #fig.show()
-    fig.write_html('mapbox_1.html',auto_open=True)
+    fig.show()
+    #fig.write_html('mapbox_1.html',auto_open=True)
 
 
 
 ##interactive command
 def interactive_prompt():
+    print("Hello Welcome to 'Movie Vis'. This program contains all movies /n released on 2018, and can help you to visualize business insights for movie industry in 2018. Now you can print 'help' to see what the major functions")
     parameter=["relation","success","distributor","movie"]
     help_text =  '''
-                relation <genre>
-                    available only if there is an existing movie genre
-                    show the domestic_income and international_income of all movies in a spefic genre
-                    graph: scatterplot
-                    valid inputs: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
-                success <area> <limit>
-                    available any time
-                    list top movies with highest either domestic or international or gross revenue
-                    graph: table
-                    valid inputs: area accepts "US", "International" if novalue and other values are inputted, it will be default value as "gross"; limit requires an integer
-                distributor <genre>
-                    available only if there is an active site or nearby result set
-                    show you who are the distributors good at producing average most lucrative movies in a specific genre
-                    graph: barchart
-                    valid input: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
-                movie <name>
-                    available to all moveis released in 2018
-                    show you the component of a movie's income
-                    graph: piechart
-                    valid input: movie name
-                exit
-                    exits the program
-                help
-                    lists available commands (these instructions)'''
+    relation <genre>
+    available only if there is an existing movie genre
+    show the domestic_income and international_income of all movies in a spefic genre
+    graph: scatterplot
+    valid inputs: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
+    success <area> <limit>
+    available any time
+    list top movies with highest either domestic or international or gross revenue
+    graph: table
+    valid inputs: area accepts "US", "International" if novalue and other values are inputted, it will be default value as "gross"; limit requires an integer
+    distributor <genre>
+    available only if there is an active site or nearby result set
+    show you who are the distributors good at producing average most lucrative movies in a specific genre
+    graph: barchart
+    valid input: common movie genres "Comedy, War, Sport, ect." First letter needs to be Capitablized
+    movie <name>
+    available to all moveis released in 2018
+    show you the component of a movie's income
+    graph: piechart
+    valid input: movie name
+    exit
+    exits the program
+    help
+    lists available commands (these instructions)'''
     response = ''
     while response != 'exit':
-        name=''
         response = input('Enter a command: ')
+        content=response.split(" ")
         if response == 'help':
             print(help_text)
-            continue
-        elif response == 'exit':
-            print("bye")
-            break
-        elif response == '':
-            print("Command not recognized:" + response)
-            continue
-        elif (response.split(" ")[0]) not in parameter:
-            print("Command not recognized:" + response)
-            continue
-        elif response.startswith("relation"):
-            genre=response.split(" ")[1]
-            print(plot_scattorplot(genre))
-            continue
-        elif response.startswith("success"):
-            limit=response.split(" ")[2]
-            parameter=response.split(" ")[1]
-            print(plot_table(parameter,limit))
-            continue
-        elif response.startswith("distributor"):
-            genre=response.split(" ")[1]
-            print(plot_graphs(genre)) 
-	    continue
-        else:
-            object = response.split(" ")[1]
-            print(plot_bar(object))
-	    continue
 
+        elif content[0] == "relation":
+            plot_scattorplot(content[1])
+
+        elif content[0] == "success" and content[2].isdigit():
+            plot_table(content[1],content[2])
+
+        elif content[0] == "distributor":
+            plot_graphs(content[1])
+
+        elif content[0] == "movie":
+            plot_bar(content[1])
+
+        else:
+            print("Command not recognized:" + response)
+
+    print('bye')
 
 
 if __name__=="__main__":
+    init_db()
+    insert_stuff()
+    update_stuff()
     interactive_prompt()
